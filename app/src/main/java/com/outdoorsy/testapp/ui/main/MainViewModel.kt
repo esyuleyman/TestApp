@@ -16,6 +16,10 @@ class MainViewModel : ViewModel() {
 
     val searchStatus = MutableLiveData<SearchStatus>()
 
+    companion object {
+        const val ADDRESS = "Europe"
+    }
+
     init {
         searchStatus.value =
             SearchStatus.Empty
@@ -24,7 +28,7 @@ class MainViewModel : ViewModel() {
     fun search(keyword: String) {
         searchStatus.value =
             SearchStatus.Loading
-        searchClient?.search(keyword, null, null)?.enqueue(object : Callback<OutdoorsyResponse> {
+        searchClient?.search(keyword, null, null, ADDRESS)?.enqueue(object : Callback<OutdoorsyResponse> {
             override fun onFailure(call: Call<OutdoorsyResponse>, t: Throwable) {
                 searchStatus.value =
                     SearchStatus.Error(

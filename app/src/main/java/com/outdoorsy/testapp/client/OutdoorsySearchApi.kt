@@ -15,7 +15,8 @@ interface OutdoorsySearchApi {
     @GET("rentals")
     fun search(@Query("filter[keywords]") keyword: String,
                @Query("page[limit]") limit: Int?,
-               @Query("page[offset]") offset: Int?
+               @Query("page[offset]") offset: Int?,
+               @Query("address") address: String?
     ): Call<OutdoorsyResponse>
 
 }

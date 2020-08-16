@@ -7,6 +7,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -53,9 +54,10 @@ class OutdoorsySearchClient {
     fun search(
         keyword: String,
         limit: Int?,
-        offset: Int?
+        offset: Int?,
+        address: String?
     ): Call<OutdoorsyResponse> {
-        return apiFunction?.search(keyword, limit, offset)!!
+        return apiFunction?.search(keyword, limit, offset, address)!!
     }
 
 }
