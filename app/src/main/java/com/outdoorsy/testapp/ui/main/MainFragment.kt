@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -64,10 +66,34 @@ class MainFragment : BaseFragment() {
 
         mSearch.post({ mSearch.requestFocus()})
 
-        // TODO: Observe search result
+        viewModel.searchStatus.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is MainViewModel.SearchStatus.Loaded -> {
+                    hideProgress()
+                    mEmptyListText.visibility = View.GONE
+                    if (it.result.isEmpty()) {
+                        mEmptyListText.visibility = View.VISIBLE
+                    } else {
+                        mEmptyListText.visibility = View.GONE
+                    }
+//                    adapter.submitList(it.result)
+                }
+                is MainViewModel.SearchStatus.Error -> {
+                    hideProgress()
+                    Toast.makeText(requireActivity(), it.error, Toast.LENGTH_LONG).show()
+                }
+                is MainViewModel.SearchStatus.Loading -> {
+                    showProgress()
+                }
+            }
+        })
     }
 
     private fun searchOutdoorsy(text: String?) {
-        // TOTO: search ...
+        if (text?.length!! > 1) {
+            viewModel.search(text?.trim())
+        } else {
+//            adapter.submitList(ArrayList<OutdoorsySearchResult>())
+        }
     }
 }
