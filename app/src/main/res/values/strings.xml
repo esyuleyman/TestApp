@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">TestApp</string>
+
+    <string name="empty.result.text">Sorry, no search results</string>
+    <string name="search.text.hint">Search …</string>
+</resources>
