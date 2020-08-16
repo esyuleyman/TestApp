@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.outdoorsy.testapp.R
+import com.outdoorsy.testapp.client.response.OutdoorsySearchResult
 import com.outdoorsy.testapp.ui.BaseFragment
 import com.outdoorsy.testapp.ui.adapters.MainFragmentListAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -34,7 +35,7 @@ class MainFragment : BaseFragment() {
     }
 
     private val viewModel: MainViewModel by viewModels()
-//    private lateinit var adapter: MainFragmentListAdapter
+    private lateinit var adapter: MainFragmentListAdapter
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -42,7 +43,7 @@ class MainFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        adapter = MainFragmentListAdapter()
+        adapter = MainFragmentListAdapter()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -51,7 +52,7 @@ class MainFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mRecyclerView.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-//        mRecyclerView.adapter = adapter
+        mRecyclerView.adapter = adapter
 
         addDisposable(
             RxTextView.afterTextChangeEvents(mSearch)
@@ -76,7 +77,7 @@ class MainFragment : BaseFragment() {
                     } else {
                         mEmptyListText.visibility = View.GONE
                     }
-//                    adapter.submitList(it.result)
+                    adapter.submitList(it.result)
                 }
                 is MainViewModel.SearchStatus.Error -> {
                     hideProgress()
@@ -93,7 +94,7 @@ class MainFragment : BaseFragment() {
         if (text?.length!! > 1) {
             viewModel.search(text?.trim())
         } else {
-//            adapter.submitList(ArrayList<OutdoorsySearchResult>())
+            adapter.submitList(ArrayList<OutdoorsySearchResult>())
         }
     }
 }

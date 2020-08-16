@@ -24,6 +24,7 @@ ext {
     rxKotlinVersion = "2.4.0"
     retrofitVersion = "2.9.0"
     okhttpVersion = "4.8.1"
+    glideVersion = "4.11.0"
 }
 
 allprojects {
